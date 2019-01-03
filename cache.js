@@ -7,9 +7,15 @@ var B = 64; //Change this to fit exercise
 var E = 2; //Change this to fit exercise
 //Size of cache in bytes
 var C = 2048; //Change this to fit exercise
+
+
 var m = 16; //Change this to fit exercise
 
-//Prints the number of 
+//Prints how many bits are used for different things for cache with given attributes
+//B: Block size
+//E: Number of lines pr. set
+//C: Capacity of cache
+//m: number of bits in address
 function cacheInfo(B, E, C, m) {
     var b = Math.log2(B);
     var S = C / (B * E);
@@ -22,7 +28,8 @@ function cacheInfo(B, E, C, m) {
     console.log("Number of bits in tag: " + t);
 }
 
-function translateAddress(address, B, E, C, m) {
+//Prints info on a given address with given cache attributes
+function translateAddress(B, E, C, m, address) {
     var b = Math.log2(B);
     var S = C / (B * E);
     var s = Math.log2(S);
@@ -44,7 +51,7 @@ function translateAddress(address, B, E, C, m) {
     console.log("Cache tag (HEX): " + tag.toString(16));
 }
 
-//Converts number to string of len bits, I use this in case ITX-browser can't support toString(2) and also to get correct length
+//Converts number to string of len bits, I use this to get correct length
 function toBin(num, len) {
     var res = "";
     var temp = 0;
