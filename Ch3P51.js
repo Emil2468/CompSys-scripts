@@ -1,3 +1,4 @@
+//Script to complete exercises like the P51 in chapter 3 network book
 //Best effort guarantee - Emil 
 
 //prints the senders cwnd for each RTT. Assuming that if there are sent more than the link can contain both senders get data segment loss and assuming that senders receive triple dub ACK then that happens. Therefor we dont need the thresholds
