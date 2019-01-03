@@ -9,31 +9,40 @@ var E = 2; //Change this to fit exercise
 var C = 2048; //Change this to fit exercise
 var m = 16; //Change this to fit exercise
 
-var b = Math.log2(B);
-var S = C / (B * E);
-var s = Math.log2(S);
-var t = m - (s + b);
+//Prints the number of 
+function cacheInfo(B, E, C, m) {
+    var b = Math.log2(B);
+    var S = C / (B * E);
+    var s = Math.log2(S);
+    var t = m - (s + b);
 
-console.log("b: " + b);
-console.log("S: " + S);
-console.log("s: " + s);
-console.log("t: " + t);
+    console.log("Number of sets: " + S);
+    console.log("Number of bits in block offset: " + b);
+    console.log("Number of bits in set index: " + s);
+    console.log("Number of bits in tag: " + t);
+}
 
-//Dont know if this is needed, but here you go you spoiled brat
-var bits = toBin(address, m);
-console.log("Bits in address: " + bits);
+function translateAddress(address, B, E, C, m) {
+    var b = Math.log2(B);
+    var S = C / (B * E);
+    var s = Math.log2(S);
+    var t = m - (s + b);
+    //Dont know if this is needed, but here you go you spoiled brat
+    var bits = toBin(address, m);
+    console.log("Bits in address: " + bits);
 
-//Use bit mask to remove bits more significant than those used to the block offset
-var blockOffset = address & bitMask(b);
-console.log("Block offset (HEX): " + blockOffset.toString(16));
+    //Use bit mask to remove bits more significant than those used to the block offset
+    var blockOffset = address & bitMask(b);
+    console.log("Block offset (HEX): " + blockOffset.toString(16));
 
-//Shift away the block offset and use bit mask to isolate index
-var setIndex = (address >>> b) & bitMask(s)
-console.log("Set index (HEX): " + setIndex.toString(16));
+    //Shift away the block offset and use bit mask to isolate index
+    var setIndex = (address >>> b) & bitMask(s)
+    console.log("Set index (HEX): " + setIndex.toString(16));
 
-//Shift away block offset and index, the only thing left is the tag
-var tag = (address >>> (b+s));
-console.log("Cache tag (HEX): " + tag.toString(16));
+    //Shift away block offset and index, the only thing left is the tag
+    var tag = (address >>> (b+s));
+    console.log("Cache tag (HEX): " + tag.toString(16));
+}
 
 //Converts number to string of len bits, I use this in case ITX-browser can't support toString(2) and also to get correct length
 function toBin(num, len) {
