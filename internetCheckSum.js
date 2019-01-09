@@ -1,5 +1,4 @@
-//There is no wrap around in case of overflow, as I can't tell for sure 
-//if this is a thing here, or if it is only in UDP-checksum, I assume that there is none
+//The checksum is computed with carry and wraparound. 
 
 
 //Splits string into 16-bit integers then sums it up and prints 1s compliment of that, meaning the negated version
@@ -24,18 +23,24 @@ function checkSumString(str) {
         }
         
         sum += n;
-    
+        //Wrap around if there is overflow
+        if(sum > Math.pow(2, 16)) {
+            //Subtract 2^16 to remove the 17th bit, then add the carry in the least significant bit
+            sum = sum - Math.pow(2,16) + 1;
+        }
     }
     console.log("___________________________________")
-    //Use modulo 2^16 to make sure number is no longer than 16 bits
-    console.log("Sum:\t\t" + toBin(sum % 65536, 16)); 
-
+    console.log("Sum:\t\t" + toBin(sum, 16)); 
     //This is the checksum
-    console.log("1s compliment:\t" + toBin(~sum % 65536, 16) + " (this is the checksum)");
+    console.log("1s compliment:\t" + toBin(~sum, 16) + " (this is the checksum)");
     
 }
 
-//checkSumString("CHKSUM");
+//Example from textbook page 233
+//the last two characters might not be displayed correctly
+//but the computation agrees with the book
+// var str = "f`UU" + String.fromCharCode(143) + String.fromCharCode(12);
+// checkSumString(str);
 
 
 //Converts number to string of len bits, I use this to get correct amount of bits
