@@ -4,4 +4,12 @@ Scripts to hopefully help complete CompSys exam. Everything is, and probably sho
 
 Should you find bugs you can either open an issue descriping the bug, or create a pull request with a fix.
 
+## How to use:
+* Open browser
+* Open console in browser
+  * Either by pressing f12, <code>ctrl + shift + i</code> or rigth clicking and choosing inspect element
+  * Then chose the tab "console"
+* Copy and paste the wanted script(s) into the console, you can now call the defined functions directly from the browser console
+
 All scripts come with a best effort guarantee :)
+  
