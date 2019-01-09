@@ -2,8 +2,8 @@
 //1) the message is padded with zeros if length is not divisible by 4
 //2) That there won't be exercises with this in the exam since we haven't used it much in the course
 
-//checkSumInt(65536 * 65536 - 1);
-checkSumString('CHKSUM');
+//checkSumString('CHKSUM');
+
 function checkSumString(str) {
     var sums = [];
     for (var i = 0; i < 4; i++) {

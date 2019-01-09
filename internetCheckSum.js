@@ -1,5 +1,5 @@
 //There is no wrap around in case of overflow, as I can't tell for sure 
-//if this is a thing here, or if it is only in UDP-checksum
+//if this is a thing here, or if it is only in UDP-checksum, I assume that there is none
 
 
 //Splits string into 16-bit integers then sums it up and prints 1s compliment of that, meaning the negated version
@@ -17,20 +17,25 @@ function checkSumString(str) {
         //Shift n1 8 bits since this is most significant byte
         var n = (n1 << 8) + n2;
         if(i + 1 < str.length) {
-            console.log(str[i] + str[i+1] + ":\t\t\t" + toBin(n,16));
+            console.log(str[i] + str[i+1] + ":\t\t" + toBin(n,16));
         } else {
-            console.log(str[i] + "NO_CHAR:\t\t" + toBin(n,16));
+            //No more chars so just write null-char 
+            console.log(str[i] + "\\0:\t\t" + toBin(n,16));
         }
         
         sum += n;
     
     }
+    console.log("___________________________________")
     //Use modulo 2^16 to make sure number is no longer than 16 bits
-    console.log("Sum:\t\t\t" + toBin(sum % 65536, 16)); 
-    console.log("1s compliment:\t\t" + toBin(~sum % 65536, 16));  
+    console.log("Sum:\t\t" + toBin(sum % 65536, 16)); 
+
+    //This is the checksum
+    console.log("1s compliment:\t" + toBin(~sum % 65536, 16) + " (this is the checksum)");
+    
 }
 
-checkSumString("CNEXAM");
+//checkSumString("CHKSUM");
 
 
 //Converts number to string of len bits, I use this to get correct amount of bits
