@@ -30,7 +30,7 @@ function checkSumString(str) {
     console.log("1s compliment:\t\t" + toBin(~sum % 65536, 16));  
 }
 
-checkSumString("CHKSUM!!");
+checkSumString("CNEXAM");
 
 
 //Converts number to string of len bits, I use this to get correct amount of bits
