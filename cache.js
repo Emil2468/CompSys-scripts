@@ -8,7 +8,7 @@ var E = 2; //Change this to fit exercise
 //Size of cache in bytes
 var C = 2048; //Change this to fit exercise
 
-
+//number of bits in address
 var m = 16; //Change this to fit exercise
 
 //Prints how many bits are used for different things for cache with given attributes

@@ -39,8 +39,8 @@ function checkSumString(str) {
 //Example from textbook page 233
 //the last two characters might not be displayed correctly
 //but the computation agrees with the book
-// var str = "f`UU" + String.fromCharCode(143) + String.fromCharCode(12);
-// checkSumString(str);
+//var str = "f`UU" + String.fromCharCode(143) + String.fromCharCode(12);
+//checkSumString(str);
 
 
 //Converts number to string of len bits, I use this to get correct amount of bits
