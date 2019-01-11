@@ -11,5 +11,10 @@ Should you find bugs you can either open an issue descriping the bug, or create 
   * Then chose the tab "console"
 * Copy and paste the wanted script(s) into the console, you can now call the defined functions directly from the browser console
 
+##JS cheat sheet
+* Write integers in binary by adding 0b at the beginning, eg.: 0b101 to write 5 in binary
+* Write integers in hex by adding 0x at the beginning, eg.: 0x1a to write 26 in hex
+* Print integers in an other base by using x.toString(base), eg.: (23).toString(2) to print 23 in binary
+
 All scripts come with a best effort guarantee :)
   
