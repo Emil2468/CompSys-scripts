@@ -2,15 +2,16 @@
 //virtual address to be used
 var vAddress = 0x03d4; //Change this to fit exercise
 var pageSize = 64; //Change this to fit exercise
-var tblNrOfSets = 4; //Change this to fit exercise
+//Number of sets in TLB
+var tlbNrOfSets = 4; //Change this to fit exercise
 //number of bits in virtual address
 var vAddressLen = 14; //Change this to fit exercise
 
 
-function translateAddress(vAddress, pageSize, tblNrOfSets, vAddressLen) {
+function translateAddress(vAddress, pageSize, tlbNrOfSets, vAddressLen) {
     var p = Math.log2(pageSize);
     
-    var t = Math.log2(tblNrOfSets);
+    var t = Math.log2(tlbNrOfSets);
 
     var bits = toBin(vAddress, vAddressLen);
     console.log("Bits in virtual address: " + bits);
@@ -21,12 +22,12 @@ function translateAddress(vAddress, pageSize, tblNrOfSets, vAddressLen) {
     console.log("VPN (BIN): " + toBin(vpn, vAddressLen - p));
 
     var tlbI = (vAddress >>> p) & bitMask(t);
-    console.log("TBL Index (HEX): " + tlbI.toString(16));
-    console.log("TBL Index (BIN): " + toBin(tlbI, t));
+    console.log("TLB Index (HEX): " + tlbI.toString(16));
+    console.log("TLB Index (BIN): " + toBin(tlbI, t));
 
     var tlbT = vAddress >>> (p + t);
-    console.log("TBL Tag (HEX): " + tlbT.toString(16));
-    console.log("TBL Tag (BIN): " + toBin(tlbT, p + t));
+    console.log("TLB Tag (HEX): " + tlbT.toString(16));
+    console.log("TLB Tag (BIN): " + toBin(tlbT, p + t));
 
     var vpo = vAddress & bitMask(p);
     console.log("VPO (HEX): " + vpo.toString(16));
@@ -61,3 +62,6 @@ function bitMask(p) {
     }
     return parseInt(mask);
 }
+
+
+translateAddress(0x0825, 32, 4, 13);
