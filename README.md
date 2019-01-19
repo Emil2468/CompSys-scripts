@@ -13,6 +13,7 @@ Should you find bugs you can either open an issue descriping the bug, or create 
 
 ## Writing numbers in different bases
 * Write integers in binary by adding 0b at the beginning, eg.: 0b101 to write 5 in binary
+  * It seems the prefix 0b does not work in IE, use parseInt instead: parseInt("101", 2)
 * Write integers in hex by adding 0x at the beginning, eg.: 0x1a to write 26 in hex
 * Print integers in an other base by using x.toString(base), eg.: (23).toString(2) to print 23 in binary
 
