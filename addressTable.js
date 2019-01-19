@@ -37,6 +37,10 @@ function translateAddresses(B, E, C, m, addresses, base) {
 
         str += addresses[i].toString(16) + "\t\t";
         str += toBin(addresses[i], m) + "\t";
+        //Insert extra tab in case of many bits
+        if(m >= 24) {
+            str += "\t";
+        }
         str += setIndex.toString(base) + "\t\t";
         str += tag.toString(base) + "\t\t";
         str += blockOffset.toString(base);
