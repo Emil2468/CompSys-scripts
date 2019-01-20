@@ -13,9 +13,9 @@ var m = 16; //Change this to fit exercise
 
 //Prints info on a given address with given cache attributes
 function translateAddress(B, E, C, m, address) {
-    var b = Math.log2(B);
+    var b = log2(B);
     var S = C / (B * E);
-    var s = Math.log2(S);
+    var s = log2(S);
     var t = m - (s + b);
     //Dont know if this is needed, but here you go you spoiled brat
     var bits = toBin(address, m);
@@ -60,4 +60,9 @@ function bitMask(p) {
         mask += Math.pow(2, i);
     }
     return parseInt(mask);
+}
+
+//Since IE does not support Math.log2 use this
+function log2(x){
+    return Math.log(x)/Math.log(2);
 }
