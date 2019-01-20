@@ -9,9 +9,9 @@ var vAddressLen = 14; //Change this to fit exercise
 
 
 function translateAddress(vAddress, pageSize, tlbNrOfSets, vAddressLen) {
-    var p = Math.log2(pageSize);
+    var p = Math.log(pageSize)/Math.log(2);
     
-    var t = Math.log2(tlbNrOfSets);
+    var t = Math.log(tlbNrOfSets)/Math.log(2);
 
     var bits = toBin(vAddress, vAddressLen);
     console.log("Bits in virtual address: " + bits);
@@ -62,6 +62,3 @@ function bitMask(p) {
     }
     return parseInt(mask);
 }
-
-
-translateAddress(0x0825, 32, 4, 13);
