@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cache Address</title>
+	<meta charset="UTF-8">
+	<script lang="javascript" src="cacheAddress.js"></script>
+	<script type="text/javascript">
+		function getVal(id){
+			return document.getElementById(id).value;
+		};
+		window.onload=function(){
+			(function () {
+			    var old = console.log;
+			    var logger = document.getElementById('log');
+			    console.log = function (message) {
+			        if (typeof message == 'object') {
+			            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+			        } else {
+			            logger.innerHTML += message + '<br />';
+			        }
+			    }
+			})();
+
+			document.getElementById("go").onclick=function(){
+				B = getVal("B")
+				E = getVal("E")
+				C = getVal("C")
+				m = getVal("m")
+				address = getVal("address")
+				translateAddress(B, E, C, m, address)
+			}
+		}
+	</script>
+</head>
+<body>
+<h1>Cache Address</h1>
+<a href="index.html">Index</a> <br> <br>
+<p>Size of each block in bytes</p>
+<input type="text", id="B"><br> <br>
+<p>Number of lines pr. set</p>
+<input type="text", id="E"><br> <br>
+<p>Size of cache in bytes</p>
+<input type="text", id="C"><br> <br>
+<p>Number of bits in address</p>
+<input type="text", id="m"><br> <br>
+<p>Address (format: 0x0004)</p>
+<input type="text", id="address"><br> <br>
+<input id="go" type="button" value="Go!"/> <br> <br>
+<div id="log"></div> <br> <br>
+</body>
+</html>
