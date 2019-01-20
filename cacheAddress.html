@@ -5,9 +5,6 @@
 	<meta charset="UTF-8">
 	<script lang="javascript" src="cacheAddress.js"></script>
 	<script type="text/javascript">
-		function getVal(id){
-			return document.getElementById(id).value;
-		};
 		window.onload=function(){
 			(function () {
 			    var old = console.log;
@@ -22,12 +19,13 @@
 			})();
 
 			document.getElementById("go").onclick=function(){
-				B = getVal("B")
-				E = getVal("E")
-				C = getVal("C")
-				m = getVal("m")
-				address = getVal("address")
-				translateAddress(B, E, C, m, address)
+				translateAddress(
+					document.getElementById("B").value, 
+					document.getElementById("E").value, 
+					document.getElementById("C").value, 
+					document.getElementById("m").value,
+					document.getElementById("address").value
+				)
 			}
 		}
 	</script>
