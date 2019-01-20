@@ -75,9 +75,8 @@ function checkSumBytes(bytes) {
 //but the computation agrees with the book
 //var str = "f`UU" + String.fromCharCode(143) + String.fromCharCode(12);
 //checkSumString(str);
-
-var bytes = [0b01100110, 0b01100000, 0b01010101, 0b01010101, 0b10001111, 0b00001100];
-checkSumBytes(bytes);
+// var bytes = [parseInt("01100110", 2), parseInt("01100000", 2), parseInt("01010101", 2), parseInt("01010101", 2), parseInt("10001111", 2), parseInt("00001100", 2)];
+// checkSumBytes(bytes);
 
 
 //Converts number to string of len bits, I use this to get correct amount of bits

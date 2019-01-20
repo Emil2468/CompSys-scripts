@@ -9,9 +9,9 @@ var vAddressLen = 14; //Change this to fit exercise
 
 
 function translateAddress(vAddress, pageSize, tlbNrOfSets, vAddressLen) {
-    var p = Math.log2(pageSize);
+    var p = log2(pageSize);
     
-    var t = Math.log2(tlbNrOfSets);
+    var t = log2(tlbNrOfSets);
 
     var bits = toBin(vAddress, vAddressLen);
     console.log("Bits in virtual address: " + bits);
@@ -63,5 +63,10 @@ function bitMask(p) {
     return parseInt(mask);
 }
 
+//Since IE does not support Math.log2 use this
+function log2(x){
+    return Math.log(x)/Math.log(2);
+}
 
-translateAddress(0x0825, 32, 4, 13);
+
+//translateAddress(0x0825, 32, 4, 13);
