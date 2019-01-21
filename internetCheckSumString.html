@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Checksum string</title>
+	<meta charset="UTF-8">
+	<script lang="javascript" src="internetCheckSum.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			(function () {
+			    var old = console.log;
+			    var logger = document.getElementById('log');
+			    console.log = function (message) {
+			        if (typeof message == 'object') {
+			            logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+			        } else {
+			            logger.innerHTML += message + '<br />';
+			        }
+			    }
+			})();
+
+			document.getElementById("go").onclick=function(){
+				checkSumString(
+					document.getElementById("str").value
+				)
+			}
+		}
+	</script>
+</head>
+<body>
+<h1>Checksum string</h1>
+<a href="index.html">Index</a> <br> <br>
+<p>String to check</p>
+<input type="text", id="str"><br> <br>
+<input id="go" type="button" value="Go!"/> <br> <br>
+<div id="log"></div> <br> <br>
+</body>
+</html>
