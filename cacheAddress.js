@@ -11,23 +11,6 @@ var C = 2048; //Change this to fit exercise
 //number of bits in address
 var m = 16; //Change this to fit exercise
 
-//Prints how many bits are used for different things for cache with given attributes
-//B: Block size
-//E: Number of lines pr. set
-//C: Capacity of cache
-//m: number of bits in address
-function cacheInfo(B, E, C, m) {
-    var b = log2(B);
-    var S = C / (B * E);
-    var s = log2(S);
-    var t = m - (s + b);
-
-    console.log("Number of sets: " + S);
-    console.log("Number of bits in block offset: " + b);
-    console.log("Number of bits in set index: " + s);
-    console.log("Number of bits in tag: " + t);
-}
-
 //Prints info on a given address with given cache attributes
 function translateAddress(B, E, C, m, address) {
     var b = log2(B);

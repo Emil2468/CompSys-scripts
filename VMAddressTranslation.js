@@ -68,5 +68,4 @@ function log2(x){
     return Math.log(x)/Math.log(2);
 }
 
-
 //translateAddress(0x0825, 32, 4, 13);
