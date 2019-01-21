@@ -5,11 +5,15 @@ Scripts to hopefully help complete CompSys exam. Everything is, and probably sho
 Should you find bugs you can either open an issue descriping the bug, or create a pull request with a fix.
 
 ## How to use:
+### Console
+Not sure this will work on ITX, but if it does:
 * Open browser
 * Open console in browser
   * Either by pressing f12, <code>ctrl + shift + i</code> or rigth clicking and choosing inspect element
   * Then chose the tab "console"
 * Copy and paste the wanted script(s) into the console, you can now call the defined functions directly from the browser console
+### UI
+Open index.html in a browser, here you can see avaviable scripts pick one and insert values. You migth need to tell internet explorer to allow running local files, if it pops up
 
 ## Writing numbers in different bases
 * Write integers in binary by adding 0b at the beginning, eg.: 0b101 to write 5 in binary
