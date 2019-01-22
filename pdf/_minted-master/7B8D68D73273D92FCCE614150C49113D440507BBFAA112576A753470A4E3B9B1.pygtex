@@ -1,0 +1,36 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//Script to give information on an address when using specific cache}
+\PYG{c+c1}{//I believe that the names comply with the book as seen on page 653}
+\PYG{k+kd}{var} \PYG{n+nx}{address} \PYG{o}{=} \PYG{l+m+mh}{0x0004}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{c+c1}{//Size of each block in bytes}
+\PYG{k+kd}{var} \PYG{n+nx}{B} \PYG{o}{=} \PYG{l+m+mi}{64}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{c+c1}{//Number of lines pr. set}
+\PYG{k+kd}{var} \PYG{n+nx}{E} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{c+c1}{//Size of cache in bytes}
+\PYG{k+kd}{var} \PYG{n+nx}{C} \PYG{o}{=} \PYG{l+m+mi}{2048}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+
+\PYG{c+c1}{//Number of bits in address}
+\PYG{k+kd}{var} \PYG{n+nx}{m} \PYG{o}{=} \PYG{l+m+mi}{16}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+
+\PYG{c+c1}{//Prints how many bits are used for different things for cache with given attributes}
+\PYG{c+c1}{//B: Block size}
+\PYG{c+c1}{//E: Number of lines pr. set}
+\PYG{c+c1}{//C: Capacity of cache}
+\PYG{c+c1}{//m: number of bits in address}
+\PYG{k+kd}{function} \PYG{n+nx}{cacheInfo}\PYG{p}{(}\PYG{n+nx}{B}\PYG{p}{,} \PYG{n+nx}{E}\PYG{p}{,} \PYG{n+nx}{C}\PYG{p}{,} \PYG{n+nx}{m}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{b} \PYG{o}{=} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{B}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{S} \PYG{o}{=} \PYG{n+nx}{C} \PYG{o}{/} \PYG{p}{(}\PYG{n+nx}{B} \PYG{o}{*} \PYG{n+nx}{E}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{s} \PYG{o}{=} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{S}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{t} \PYG{o}{=} \PYG{n+nx}{m} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n+nx}{s} \PYG{o}{+} \PYG{n+nx}{b}\PYG{p}{);}
+
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Number of sets: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{S}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Number of bits in block offset: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{b}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Number of bits in set index: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{s}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Number of bits in tag: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{t}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Since IE does not support Math.log2 use this}
+\PYG{k+kd}{function} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)}\PYG{o}{/}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

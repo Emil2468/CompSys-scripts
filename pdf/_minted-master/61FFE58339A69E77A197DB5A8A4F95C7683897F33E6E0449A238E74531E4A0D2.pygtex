@@ -1,0 +1,60 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//Script to complete exercises like the P51 in chapter 3 network book}
+
+\PYG{c+c1}{//prints the senders cwnd for each RTT. Assuming that if there are sent more}
+\PYG{c+c1}{//than the link can contain both senders get data segment loss and assuming }
+\PYG{c+c1}{//that senders receive triple dub ACK then that happens. Therefor we dont need }
+\PYG{c+c1}{//the thresholds}
+
+\PYG{c+c1}{//Segments sent by each sender pr. round}
+\PYG{k+kd}{var} \PYG{n+nx}{cwnd\PYGZus{}c1} \PYG{o}{=} \PYG{l+m+mi}{15}\PYG{p}{;}
+\PYG{k+kd}{var} \PYG{n+nx}{cwnd\PYGZus{}c2} \PYG{o}{=} \PYG{l+m+mi}{10}\PYG{p}{;}
+\PYG{c+c1}{//Round trip time for each sender in ms}
+\PYG{k+kd}{var} \PYG{n+nx}{rtt\PYGZus{}c1} \PYG{o}{=} \PYG{l+m+mi}{100}\PYG{p}{;}
+\PYG{k+kd}{var} \PYG{n+nx}{rtt\PYGZus{}c2} \PYG{o}{=} \PYG{l+m+mi}{100}\PYG{p}{;}
+\PYG{c+c1}{//speed of the link c1 and c2 uses in segments / sec}
+\PYG{k+kd}{var} \PYG{n+nx}{link\PYGZus{}speed} \PYG{o}{=} \PYG{l+m+mi}{30}\PYG{p}{;}
+\PYG{k+kd}{var} \PYG{n+nx}{maxTime} \PYG{o}{=} \PYG{l+m+mi}{2200}\PYG{p}{;}
+\PYG{k+kd}{var} \PYG{n+nx}{timeInc}\PYG{p}{;}
+\PYG{c+c1}{//Set incrementation of timer so we can simulate each round trip for each sender}
+\PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{rtt\PYGZus{}c1} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{rtt\PYGZus{}c2}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n+nx}{timeInc} \PYG{o}{=} \PYG{n+nx}{rtt\PYGZus{}c1}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+    \PYG{n+nx}{timeInc} \PYG{o}{=} \PYG{n+nx}{rtt\PYGZus{}c2}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Time: \PYGZdq{}} \PYG{o}{+} \PYG{l+m+mi}{0} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}t\PYGZbs{}tcwnd for c1: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{cwnd\PYGZus{}c1} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}tcwnd for c2: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{cwnd\PYGZus{}c2}\PYG{p}{);}
+\PYG{c+c1}{//Notice that 3 isn\PYGZsq{}t added when loss is detected, sicne the exercise doesn\PYGZsq{}t}
+\PYG{c+c1}{// say there should}
+\PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{n+nx}{timeInc}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}=} \PYG{n+nx}{maxTime}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{+=} \PYG{n+nx}{timeInc}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{c+c1}{//save old cwnd for c1 to use for computations later}
+    \PYG{n+nx}{old\PYGZus{}cwnd\PYGZus{}c1} \PYG{o}{=} \PYG{n+nx}{cwnd\PYGZus{}c1}\PYG{p}{;} 
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{n+nx}{rtt\PYGZus{}c1} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{cwnd\PYGZus{}c1} \PYG{o}{*} \PYG{l+m+mi}{1000} \PYG{o}{/} \PYG{n+nx}{rtt\PYGZus{}c1} \PYG{o}{+} \PYG{n+nx}{cwnd\PYGZus{}c2} \PYG{o}{*} \PYG{l+m+mi}{1000} \PYG{o}{/} \PYG{n+nx}{rtt\PYGZus{}c2} \PYG{o}{\PYGZgt{}} \PYG{n+nx}{link\PYGZus{}speed}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{c+c1}{//Both experience loss, notice that there will not be added 3 as }
+            \PYG{c+c1}{//normaly, because the exercise I made this for didn\PYGZsq{}t}
+            \PYG{n+nx}{cwnd\PYGZus{}c1} \PYG{o}{=} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nx}{cwnd\PYGZus{}c1} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{);}
+            \PYG{c+c1}{//Cannot go bellow 1}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{cwnd\PYGZus{}c1} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n+nx}{cwnd\PYGZus{}c1} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{cwnd\PYGZus{}c1}\PYG{o}{++}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{n+nx}{rtt\PYGZus{}c2} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{old\PYGZus{}cwnd\PYGZus{}c1} \PYG{o}{*} \PYG{l+m+mi}{1000} \PYG{o}{/} \PYG{n+nx}{rtt\PYGZus{}c1} \PYG{o}{+} \PYG{n+nx}{cwnd\PYGZus{}c2} \PYG{o}{*} \PYG{l+m+mi}{1000} \PYG{o}{/} \PYG{n+nx}{rtt\PYGZus{}c2} \PYG{o}{\PYGZgt{}} \PYG{n+nx}{link\PYGZus{}speed}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{c+c1}{//Both experience loss, notice that there will not be added 3 as}
+            \PYG{c+c1}{//normaly, because the exercise I made this for didn\PYGZsq{}t}
+            \PYG{n+nx}{cwnd\PYGZus{}c2} \PYG{o}{=} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nx}{cwnd\PYGZus{}c2} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{);}
+            \PYG{c+c1}{//Cannot go bellow 1}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{cwnd\PYGZus{}c2} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n+nx}{cwnd\PYGZus{}c2} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{cwnd\PYGZus{}c2}\PYG{o}{++}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Time: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{i} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}tcwnd for c1: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{cwnd\PYGZus{}c1} \PYG{o}{+}
+         \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}tcwnd for c2: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{cwnd\PYGZus{}c2}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

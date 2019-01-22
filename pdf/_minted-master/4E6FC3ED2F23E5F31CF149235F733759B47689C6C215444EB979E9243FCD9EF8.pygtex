@@ -1,0 +1,70 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//Script to give information on an address when using specific cache}
+\PYG{c+c1}{//I believe that the names comply with the book as seen on page 653}
+\PYG{k+kd}{var} \PYG{n+nx}{address} \PYG{o}{=} \PYG{l+m+mh}{0x0004}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{c+c1}{//Size of each block in bytes}
+\PYG{k+kd}{var} \PYG{n+nx}{B} \PYG{o}{=} \PYG{l+m+mi}{64}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{c+c1}{//Number of lines pr. set}
+\PYG{k+kd}{var} \PYG{n+nx}{E} \PYG{o}{=} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{c+c1}{//Size of cache in bytes}
+\PYG{k+kd}{var} \PYG{n+nx}{C} \PYG{o}{=} \PYG{l+m+mi}{2048}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+
+\PYG{c+c1}{//number of bits in address}
+\PYG{k+kd}{var} \PYG{n+nx}{m} \PYG{o}{=} \PYG{l+m+mi}{16}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+
+\PYG{c+c1}{//Prints info on a given address with given cache attributes}
+\PYG{k+kd}{function} \PYG{n+nx}{translateAddress}\PYG{p}{(}\PYG{n+nx}{B}\PYG{p}{,} \PYG{n+nx}{E}\PYG{p}{,} \PYG{n+nx}{C}\PYG{p}{,} \PYG{n+nx}{m}\PYG{p}{,} \PYG{n+nx}{address}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{b} \PYG{o}{=} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{B}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{S} \PYG{o}{=} \PYG{n+nx}{C} \PYG{o}{/} \PYG{p}{(}\PYG{n+nx}{B} \PYG{o}{*} \PYG{n+nx}{E}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{s} \PYG{o}{=} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{S}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{t} \PYG{o}{=} \PYG{n+nx}{m} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n+nx}{s} \PYG{o}{+} \PYG{n+nx}{b}\PYG{p}{);}
+    \PYG{c+c1}{//Dont know if this is needed, but here you go you spoiled brat}
+    \PYG{k+kd}{var} \PYG{n+nx}{bits} \PYG{o}{=} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{address}\PYG{p}{,} \PYG{n+nx}{m}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Bits in address: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{bits}\PYG{p}{);}
+
+    \PYG{c+c1}{//Use bit mask to remove bits more significant than those used to the block offset}
+    \PYG{k+kd}{var} \PYG{n+nx}{blockOffset} \PYG{o}{=} \PYG{n+nx}{address} \PYG{o}{\PYGZam{}} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{b}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Block offset (HEX): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{blockOffset}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{));}
+
+    \PYG{c+c1}{//Shift away the block offset and use bit mask to isolate index}
+    \PYG{k+kd}{var} \PYG{n+nx}{setIndex} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{address} \PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}} \PYG{n+nx}{b}\PYG{p}{)} \PYG{o}{\PYGZam{}} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{s}\PYG{p}{)}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Set index (HEX): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{setIndex}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{));}
+
+    \PYG{c+c1}{//Shift away block offset and index, the only thing left is the tag}
+    \PYG{k+kd}{var} \PYG{n+nx}{tag} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{address} \PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n+nx}{b}\PYG{o}{+}\PYG{n+nx}{s}\PYG{p}{));}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Cache tag (HEX): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{tag}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{));}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Converts number to string of len bits, I use this to get correct length}
+\PYG{k+kd}{function} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{num}\PYG{p}{,} \PYG{n+nx}{len}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{res} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+    \PYG{k+kd}{var} \PYG{n+nx}{temp} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{n+nx}{len} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{temp} \PYG{o}{=} \PYG{n+nx}{num} \PYG{o}{\PYGZam{}} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{));}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{temp} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{4} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nx}{res}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Returns a number with p ones as least significant bits, rest is zeros}
+\PYG{k+kd}{function} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{p}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+    \PYG{k+kd}{var} \PYG{n+nx}{mask} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{p}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{mask} \PYG{o}{+=} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nx}{mask}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Since IE does not support Math.log2 use this}
+\PYG{k+kd}{function} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)}\PYG{o}{/}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

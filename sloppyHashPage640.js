@@ -1,7 +1,6 @@
 //Couldn't find a good description of this, so I assume two things:
 //1) the message is padded with zeros if length is not divisible by 4
-//2) That there won't be exercises with this in the exam since we haven't used
-// it much in the course
+//2) That there won't be exercises with this in the exam since we haven't used it much in the course
 
 //checkSumString('CHKSUM');
 

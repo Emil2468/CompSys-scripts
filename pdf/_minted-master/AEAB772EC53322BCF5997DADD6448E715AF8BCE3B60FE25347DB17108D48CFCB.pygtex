@@ -1,0 +1,107 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//The checksum is computed with carry and wraparound. }
+
+
+\PYG{c+c1}{//Splits string into 16\PYGZhy{}bit integers then sums it up and prints 1s compliment }
+\PYG{c+c1}{//of that, meaning the negated version}
+\PYG{c+c1}{//If string does not have even length, the last byte is 0}
+\PYG{k+kd}{function} \PYG{n+nx}{checkSumString}\PYG{p}{(}\PYG{n+nx}{str}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{sum} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{str}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{+=}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{n1} \PYG{o}{=} \PYG{n+nx}{str}\PYG{p}{.}\PYG{n+nx}{charCodeAt}\PYG{p}{(}\PYG{n+nx}{i}\PYG{p}{);}
+
+        \PYG{c+c1}{//Set n2 to zero in case string is not any longer}
+        \PYG{k+kd}{var} \PYG{n+nx}{n2} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{+} \PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{str}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{n2} \PYG{o}{=} \PYG{n+nx}{str}\PYG{p}{.}\PYG{n+nx}{charCodeAt}\PYG{p}{(}\PYG{n+nx}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{c+c1}{//Shift n1 8 bits since this is most significant byte}
+        \PYG{k+kd}{var} \PYG{n+nx}{n} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{n1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{8}\PYG{p}{)} \PYG{o}{+} \PYG{n+nx}{n2}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{+} \PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{str}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{str}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{+} \PYG{n+nx}{str}\PYG{p}{[}\PYG{n+nx}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}:\PYGZbs{}t\PYGZbs{}t\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{n}\PYG{p}{,}\PYG{l+m+mi}{16}\PYG{p}{));}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{c+c1}{//No more chars so just write null\PYGZhy{}char }
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{str}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}\PYGZbs{}0:\PYGZbs{}t\PYGZbs{}t\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{n}\PYG{p}{,}\PYG{l+m+mi}{16}\PYG{p}{));}
+        \PYG{p}{\PYGZcb{}}
+        
+        \PYG{n+nx}{sum} \PYG{o}{+=} \PYG{n+nx}{n}\PYG{p}{;}
+        \PYG{c+c1}{//Wrap around if there is overflow}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{sum} \PYG{o}{\PYGZgt{}} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{16}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+            \PYG{c+c1}{//Subtract 2\PYGZca{}16 to remove the 17th bit, then add the carry in the}
+            \PYG{c+c1}{// least significant bit}
+            \PYG{n+nx}{sum} \PYG{o}{=} \PYG{n+nx}{sum} \PYG{o}{\PYGZhy{}} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{16}\PYG{p}{)} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{)}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Sum:\PYGZbs{}t\PYGZbs{}t\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{sum}\PYG{p}{,} \PYG{l+m+mi}{16}\PYG{p}{));} 
+    \PYG{c+c1}{//This is the checksum}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}1s compliment:\PYGZbs{}t\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{o}{\PYGZti{}}\PYG{n+nx}{sum}\PYG{p}{,} \PYG{l+m+mi}{16}\PYG{p}{)} \PYG{o}{+} 
+        \PYG{l+s+s2}{\PYGZdq{} (this is the checksum)\PYGZdq{}}\PYG{p}{);}
+    
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Same as above, but takes array of bytes instead of a string}
+\PYG{c+c1}{//Expects that all entries are between 0 and 255 (both inclusive)}
+\PYG{k+kd}{function} \PYG{n+nx}{checkSumBytes}\PYG{p}{(}\PYG{n+nx}{bytes}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{sum} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{bytes}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{+=}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{n1} \PYG{o}{=} \PYG{n+nx}{bytes}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{];}
+
+        \PYG{c+c1}{//Set n2 to zero in case string is not any longer}
+        \PYG{k+kd}{var} \PYG{n+nx}{n2} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{+} \PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{bytes}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{n2} \PYG{o}{=} \PYG{n+nx}{bytes}\PYG{p}{[}\PYG{n+nx}{i} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{];}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{c+c1}{//Shift n1 8 bits since this is most significant byte}
+        \PYG{k+kd}{var} \PYG{n+nx}{n} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{n1} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+m+mi}{8}\PYG{p}{)} \PYG{o}{+} \PYG{n+nx}{n2}\PYG{p}{;}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{+} \PYG{l+m+mi}{1} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{bytes}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{bytes}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{bytes}\PYG{p}{[}\PYG{n+nx}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}:\PYGZbs{}t\PYGZbs{}t\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{n}\PYG{p}{,}\PYG{l+m+mi}{16}\PYG{p}{));}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{c+c1}{//No more chars so just write null\PYGZhy{}char }
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{bytes}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}\PYGZbs{}0:\PYGZbs{}t\PYGZbs{}t\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{n}\PYG{p}{,}\PYG{l+m+mi}{16}\PYG{p}{));}
+        \PYG{p}{\PYGZcb{}}
+        
+        \PYG{n+nx}{sum} \PYG{o}{+=} \PYG{n+nx}{n}\PYG{p}{;}
+        \PYG{c+c1}{//Wrap around if there is overflow}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{sum} \PYG{o}{\PYGZgt{}} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{16}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+            \PYG{c+c1}{//Subtract 2\PYGZca{}16 to remove the 17th bit, then add the carry in the }
+            \PYG{c+c1}{//least significant bit}
+            \PYG{n+nx}{sum} \PYG{o}{=} \PYG{n+nx}{sum} \PYG{o}{\PYGZhy{}} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{16}\PYG{p}{)} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{)}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Sum:\PYGZbs{}t\PYGZbs{}t\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{sum}\PYG{p}{,} \PYG{l+m+mi}{16}\PYG{p}{));} 
+    \PYG{c+c1}{//This is the checksum}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}1s compliment:\PYGZbs{}t\PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{o}{\PYGZti{}}\PYG{n+nx}{sum}\PYG{p}{,} \PYG{l+m+mi}{16}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} (this is the checksum)\PYGZdq{}}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Example from textbook page 233}
+\PYG{c+c1}{//the last two characters might not be displayed correctly}
+\PYG{c+c1}{//but the computation agrees with the book}
+\PYG{c+c1}{//var str = \PYGZdq{}f`UU\PYGZdq{} + String.fromCharCode(143) + String.fromCharCode(12);}
+\PYG{c+c1}{//checkSumString(str);}
+\PYG{c+c1}{// var bytes = [parseInt(\PYGZdq{}01100110\PYGZdq{}, 2), parseInt(\PYGZdq{}01100000\PYGZdq{}, 2), }
+\PYG{c+c1}{//  parseInt(\PYGZdq{}01010101\PYGZdq{}, 2), parseInt(\PYGZdq{}01010101\PYGZdq{}, 2), }
+\PYG{c+c1}{//  parseInt(\PYGZdq{}10001111\PYGZdq{}, 2), parseInt(\PYGZdq{}00001100\PYGZdq{}, 2)];}
+\PYG{c+c1}{// checkSumBytes(bytes);}
+
+
+\PYG{c+c1}{//Converts number to string of len bits, I use this to get correct }
+\PYG{c+c1}{//amount of bits}
+\PYG{k+kd}{function} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{num}\PYG{p}{,} \PYG{n+nx}{len}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{res} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+    \PYG{k+kd}{var} \PYG{n+nx}{temp} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{n+nx}{len} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{temp} \PYG{o}{=} \PYG{n+nx}{num} \PYG{o}{\PYGZam{}} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{));}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{temp} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{4} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nx}{res}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

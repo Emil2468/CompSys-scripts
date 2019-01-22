@@ -13,9 +13,9 @@
 //base: base to print, set index, tag and offset in (number between 2 and 36)
 //Prints a table showing translation of each address
 function translateAddresses(B, E, C, m, addresses, base) {
-    var b = log2(B)
+    var b = Math.log2(B);
     var S = C / (B * E);
-    var s = log2(S);
+    var s = Math.log2(S);
     var t = m - (s + b);
     var headLine = "Address (HEX)\tBits (BIN)"
     //insert correct amount of tabs to make room for all bits
@@ -32,8 +32,7 @@ function translateAddresses(B, E, C, m, addresses, base) {
         var setIndex = (addresses[i] >>> b) & bitMask(s)
         //Shift away block offset and index, the only thing left is the tag
         var tag = (addresses[i] >>> (b+s));
-        //Use bit mask to remove bits more significant than those used to the
-        //block offset
+        //Use bit mask to remove bits more significant than those used to the block offset
         var blockOffset = addresses[i] & bitMask(b);
 
         str += addresses[i].toString(16) + "\t\t";
@@ -77,17 +76,10 @@ function bitMask(p) {
     return parseInt(mask);
 }
 
-//Since IE does not support Math.log2 use this
-function log2(x){
-    return Math.log(x)/Math.log(2);
-}
-
 //Examples below:
 
 //Prints information in binary
-// translateAddresses(64, 2, 2048, 20, 
-//[0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004], 2);
+// translateAddresses(64, 2, 2048, 20, [0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004, 0b101010011], 2);
 
 //Prints information in hex
-//translateAddresses(64, 2, 2048, 20, 
-//[0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004], 16);
+// translateAddresses(64, 2, 2048, 20, [0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004, 0b101010011], 16);

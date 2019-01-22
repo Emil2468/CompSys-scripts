@@ -1,9 +1,6 @@
 //Script to complete exercises like the P51 in chapter 3 network book
 
-//prints the senders cwnd for each RTT. Assuming that if there are sent more
-//than the link can contain both senders get data segment loss and assuming 
-//that senders receive triple dub ACK then that happens. Therefor we dont need 
-//the thresholds
+//prints the senders cwnd for each RTT. Assuming that if there are sent more than the link can contain both senders get data segment loss and assuming that senders receive triple dub ACK then that happens. Therefor we dont need the thresholds
 
 //Segments sent by each sender pr. round
 var cwnd_c1 = 15;
@@ -22,15 +19,13 @@ if (rtt_c1 < rtt_c2) {
     timeInc = rtt_c2;
 }
 console.log("Time: " + 0 + "\t\tcwnd for c1: " + cwnd_c1 + "\tcwnd for c2: " + cwnd_c2);
-//Notice that 3 isn't added when loss is detected, sicne the exercise doesn't
-// say there should
+//Notice that 3 isn't added when loss is detected, sicne the exercise doesn't say there should
 for (var i = timeInc; i <= maxTime; i += timeInc) {
     //save old cwnd for c1 to use for computations later
     old_cwnd_c1 = cwnd_c1; 
     if (i % rtt_c1 == 0) {
         if (cwnd_c1 * 1000 / rtt_c1 + cwnd_c2 * 1000 / rtt_c2 > link_speed) {
-            //Both experience loss, notice that there will not be added 3 as 
-            //normaly, because the exercise I made this for didn't
+            //Both experience loss, notice that there will not be added 3 as normaly, because the exercise I made this for didn't
             cwnd_c1 = parseInt(cwnd_c1 / 2);
             //Cannot go bellow 1
             if(cwnd_c1 < 1) {
@@ -42,8 +37,7 @@ for (var i = timeInc; i <= maxTime; i += timeInc) {
     }
     if (i % rtt_c2 == 0) {
         if (old_cwnd_c1 * 1000 / rtt_c1 + cwnd_c2 * 1000 / rtt_c2 > link_speed) {
-            //Both experience loss, notice that there will not be added 3 as
-            //normaly, because the exercise I made this for didn't
+            //Both experience loss, notice that there will not be added 3 as normaly, because the exercise I made this for didn't
             cwnd_c2 = parseInt(cwnd_c2 / 2);
             //Cannot go bellow 1
             if(cwnd_c2 < 1) {
@@ -53,6 +47,5 @@ for (var i = timeInc; i <= maxTime; i += timeInc) {
             cwnd_c2++;
         }
     }
-    console.log("Time: " + i + "\tcwnd for c1: " + cwnd_c1 +
-         "\tcwnd for c2: " + cwnd_c2);
+    console.log("Time: " + i + "\tcwnd for c1: " + cwnd_c1 + "\tcwnd for c2: " + cwnd_c2);
 }

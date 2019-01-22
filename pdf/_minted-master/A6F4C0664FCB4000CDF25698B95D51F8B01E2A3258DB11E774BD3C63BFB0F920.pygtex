@@ -1,0 +1,65 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//JavaScript\PYGZhy{}C24.2.0 (SpiderMonkey)}
+
+
+
+
+
+\PYG{k+kd}{function} \PYG{n+nx}{crc}\PYG{p}{(}\PYG{n+nx}{generator}\PYG{p}{,} \PYG{n+nx}{message}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{message\PYGZus{}original} \PYG{o}{=} \PYG{n+nx}{message}\PYG{p}{;} \PYG{c+c1}{//retain old M}
+
+    \PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k+kd}{var} \PYG{n+nx}{offset} \PYG{o}{=} \PYG{n+nx}{generator}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{;} \PYG{c+c1}{//get G length}
+
+    \PYG{k}{for} \PYG{p}{(}\PYG{n+nx}{n} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{n} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{offset}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n+nx}{n}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{c+c1}{//Append G length \PYGZhy{}1 zeros to M }
+        \PYG{c+c1}{//(G = length of generator)}
+        \PYG{n+nx}{message} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}M  : \PYGZdq{}}\PYG{o}{+}\PYG{n+nx}{message}\PYG{p}{);}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{\PYGZlt{}=} \PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{length} \PYG{o}{\PYGZhy{}} \PYG{n+nx}{offset}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{c+c1}{//Continue until we find a one in the message}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{message}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kd}{var} \PYG{n+nx}{temp} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+            \PYG{k}{for} \PYG{p}{(}\PYG{n+nx}{g} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{g} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{generator}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{;} \PYG{n+nx}{g}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{c+c1}{//Some char xor\PYGZhy{}ing}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{message}\PYG{p}{[}\PYG{n+nx}{i}\PYG{o}{+}\PYG{n+nx}{g}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n+nx}{generator}\PYG{p}{[}\PYG{n+nx}{g}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                    \PYG{n+nx}{temp} \PYG{o}{+=} \PYG{l+s+s1}{\PYGZsq{}0\PYGZsq{}}\PYG{p}{;}
+                \PYG{p}{\PYGZcb{}}
+                \PYG{k}{else} \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{message}\PYG{p}{[}\PYG{n+nx}{i}\PYG{o}{+}\PYG{n+nx}{g}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n+nx}{generator}\PYG{p}{[}\PYG{n+nx}{g}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                    \PYG{n+nx}{temp} \PYG{o}{+=} \PYG{l+s+s1}{\PYGZsq{}1\PYGZsq{}}\PYG{p}{;}
+                \PYG{p}{\PYGZcb{}}
+                \PYG{k}{else} \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{message}\PYG{p}{[}\PYG{n+nx}{i}\PYG{o}{+}\PYG{n+nx}{g}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n+nx}{generator}\PYG{p}{[}\PYG{n+nx}{g}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                    \PYG{n+nx}{temp} \PYG{o}{+=} \PYG{l+s+s1}{\PYGZsq{}1\PYGZsq{}}\PYG{p}{;}
+                \PYG{p}{\PYGZcb{}}
+                \PYG{k}{else} \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{message}\PYG{p}{[}\PYG{n+nx}{i}\PYG{o}{+}\PYG{n+nx}{g}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}} \PYG{o}{\PYGZam{}\PYGZam{}} \PYG{n+nx}{generator}\PYG{p}{[}\PYG{n+nx}{g}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                    \PYG{n+nx}{temp} \PYG{o}{+=} \PYG{l+s+s1}{\PYGZsq{}0\PYGZsq{}}\PYG{p}{;}
+                \PYG{p}{\PYGZcb{}}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{c+c1}{//Fill string with some amount of spaces}
+            \PYG{k+kd}{var} \PYG{n+nx}{spaces} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;} 
+            \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{z} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{z} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{i}\PYG{p}{;} \PYG{n+nx}{z}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}} \PYG{n+nx}{spaces} \PYG{o}{+=} \PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{p}{;} \PYG{p}{\PYGZcb{}}
+            
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}G:   \PYGZdq{}}\PYG{o}{+}\PYG{n+nx}{spaces} \PYG{o}{+} \PYG{n+nx}{generator}\PYG{p}{);} 
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}temp:\PYGZdq{}}\PYG{o}{+}\PYG{n+nx}{spaces} \PYG{o}{+} \PYG{n+nx}{temp}\PYG{p}{);}
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{);}
+            \PYG{c+c1}{//Add intermediate result to message}
+            \PYG{n+nx}{message} \PYG{o}{=} \PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{substring}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{)} \PYG{o}{+} \PYG{n+nx}{temp} \PYG{o}{+} 
+                \PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{substring}\PYG{p}{(}\PYG{n+nx}{i}\PYG{o}{+}\PYG{n+nx}{offset}\PYG{p}{,} \PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{);} 
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}M  : \PYGZdq{}}\PYG{o}{+}\PYG{n+nx}{message}\PYG{p}{);}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}n\PYGZbs{}ntemp: \PYGZdq{}}\PYG{o}{+}\PYG{n+nx}{temp}\PYG{p}{);}
+
+    \PYG{c+c1}{//gets the last (offset \PYGZhy{} 1) chars of message = R}
+    \PYG{k+kd}{var} \PYG{n+nx}{R} \PYG{o}{=} \PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{substring}\PYG{p}{(}\PYG{n+nx}{message}\PYG{p}{.}\PYG{n+nx}{length} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n+nx}{offset} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{));} 
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}R: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{R}\PYG{p}{);}
+    \PYG{c+c1}{//message concated with R}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}M\PYGZam{}R: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{message\PYGZus{}original} \PYG{o}{+}\PYG{l+s+s2}{\PYGZdq{} \PYGZdq{}}\PYG{o}{+} \PYG{n+nx}{R}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kd}{var} \PYG{n+nx}{generator} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}1001\PYGZdq{}}\PYG{p}{;}
+\PYG{k+kd}{var} \PYG{n+nx}{message} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}101110\PYGZdq{}}\PYG{p}{;}
+\PYG{c+c1}{//Example:}
+\PYG{c+c1}{//crc(generator, message); //Should give R = 011 see page 478}
+\end{Verbatim}
