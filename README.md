@@ -14,6 +14,8 @@ Not sure this will work on ITX, but if it does:
 * Copy and paste the wanted script(s) into the console, you can now call the defined functions directly from the browser console
 ### UI
 Open index.html in a browser, here you can see available scripts pick one and insert values. You migth need to tell internet explorer to allow running local files, if it pops up
+### PDF
+In case scripts won't work I added a pdf containing all scripts, so one can manually walk through the scripts, without text editor.
 
 ## Writing numbers in different bases
 * Write integers in binary by adding 0b at the beginning, eg.: 0b101 to write 5 in binary

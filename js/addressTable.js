@@ -32,7 +32,8 @@ function translateAddresses(B, E, C, m, addresses, base) {
         var setIndex = (addresses[i] >>> b) & bitMask(s)
         //Shift away block offset and index, the only thing left is the tag
         var tag = (addresses[i] >>> (b+s));
-        //Use bit mask to remove bits more significant than those used to the block offset
+        //Use bit mask to remove bits more significant than those used to the
+        //block offset
         var blockOffset = addresses[i] & bitMask(b);
 
         str += addresses[i].toString(16) + "\t\t";
@@ -84,7 +85,9 @@ function log2(x){
 //Examples below:
 
 //Prints information in binary
-// translateAddresses(64, 2, 2048, 20, [0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004], 2);
+// translateAddresses(64, 2, 2048, 20, 
+//[0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004], 2);
 
 //Prints information in hex
-translateAddresses(64, 2, 2048, 20, [0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004], 16);
+//translateAddresses(64, 2, 2048, 20, 
+//[0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004], 16);

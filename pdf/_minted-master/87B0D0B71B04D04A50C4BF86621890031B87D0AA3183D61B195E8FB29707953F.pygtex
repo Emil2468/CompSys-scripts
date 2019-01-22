@@ -1,0 +1,48 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//Couldn\PYGZsq{}t find a good description of this, so I assume two things:}
+\PYG{c+c1}{//1) the message is padded with zeros if length is not divisible by 4}
+\PYG{c+c1}{//2) That there won\PYGZsq{}t be exercises with this in the exam since we haven\PYGZsq{}t used}
+\PYG{c+c1}{// it much in the course}
+
+\PYG{c+c1}{//checkSumString(\PYGZsq{}CHKSUM\PYGZsq{});}
+
+\PYG{k+kd}{function} \PYG{n+nx}{checkSumString}\PYG{p}{(}\PYG{n+nx}{str}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{sums} \PYG{o}{=} \PYG{p}{[];}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{4}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{sums}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{res} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{str}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{4} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{res}\PYG{p}{);}
+            \PYG{n+nx}{res} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n+nx}{res} \PYG{o}{+=} \PYG{n+nx}{str}\PYG{p}{.}\PYG{n+nx}{charCodeAt}\PYG{p}{(}\PYG{n+nx}{i}\PYG{p}{).}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}   \PYGZdq{}}\PYG{p}{;}
+
+        \PYG{n+nx}{sums}\PYG{p}{[}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{sums}\PYG{p}{[}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{+} \PYG{n+nx}{str}\PYG{p}{.}\PYG{n+nx}{charCodeAt}\PYG{p}{(}\PYG{n+nx}{i}\PYG{p}{))} \PYG{o}{\PYGZpc{}} \PYG{l+m+mh}{0xff}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{//Since the last line won\PYGZsq{}t be printed in the loop, print it here}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{res}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{)}
+    \PYG{n+nx}{res} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{4}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{res} \PYG{o}{+=} \PYG{n+nx}{sums}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{].}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}   \PYGZdq{}}\PYG{p}{;}
+
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{res}\PYG{p}{);}
+
+\PYG{p}{\PYGZcb{}}
+
+
+\PYG{c+c1}{//Returns the n\PYGZsq{}th byte from num, 0th being the least significant byte}
+\PYG{k+kd}{function} \PYG{n+nx}{extractByte}\PYG{p}{(}\PYG{n+nx}{n}\PYG{p}{,} \PYG{n+nx}{num}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{mask} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{n+nx}{n} \PYG{o}{*} \PYG{l+m+mi}{8}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{p}{(}\PYG{n+nx}{n} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{l+m+mi}{8}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{c+c1}{//Add 8 bits set to one in correct position}
+        \PYG{n+nx}{mask} \PYG{o}{+=} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{));}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{c+c1}{//bitwise and to set all other bytes to 0}
+    \PYG{c+c1}{//then shift so we only have one relevant byte}
+    \PYG{k}{return} \PYG{p}{(}\PYG{n+nx}{mask} \PYG{o}{\PYGZam{}} \PYG{n+nx}{num}\PYG{p}{)} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n+nx}{n} \PYG{o}{*} \PYG{l+m+mi}{8}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Address table}{2}
+\contentsline {section}{\numberline {2}Cache address}{5}
+\contentsline {section}{\numberline {3}Cache info}{7}
+\contentsline {section}{\numberline {4}Chapter 3 p51 (networking)}{8}
+\contentsline {section}{\numberline {5}Cyclic redundancy check}{10}
+\contentsline {section}{\numberline {6}internet checksum}{12}
+\contentsline {section}{\numberline {7}Hash function page 640}{15}
+\contentsline {section}{\numberline {8}To bin}{17}
+\contentsline {section}{\numberline {9}Virtual address translation}{18}

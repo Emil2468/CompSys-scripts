@@ -10,7 +10,8 @@ function crc(generator, message) {
     var i = 0;
     var offset = generator.length; //get G length
 
-    for (n = 0; n < offset-1; n++) { //Append G length -1 zeros to M (G = length of generator)
+    for (n = 0; n < offset-1; n++) { //Append G length -1 zeros to M 
+        //(G = length of generator)
         message += "0";
     }
     console.log("M  : "+message);
@@ -41,13 +42,16 @@ function crc(generator, message) {
             console.log("temp:"+spaces + temp);
             console.log("________________");
             //Add intermediate result to message
-            message = message.substring(0, i) + temp + message.substring(i+offset, message.length); 
+            message = message.substring(0, i) + temp + 
+                message.substring(i+offset, message.length); 
             console.log("M  : "+message);
         }
         i++;
     }
     console.log("\n\ntemp: "+temp);
-    var R = message.substring(message.length - (offset - 1)); //gets the last (offset - 1) chars of message = R
+
+    //gets the last (offset - 1) chars of message = R
+    var R = message.substring(message.length - (offset - 1)); 
     console.log("R: " + R);
     //message concated with R
     console.log("M&R: " + message_original +" "+ R);

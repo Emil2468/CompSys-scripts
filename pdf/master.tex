@@ -1,0 +1,54 @@
+\documentclass[12pt]{article}
+    \usepackage[margin=1in]{geometry}
+    \usepackage{amsmath}
+    \usepackage[utf8]{inputenc}
+    \usepackage{graphicx}
+    \usepackage{fancyhdr}
+    \usepackage{lastpage}
+    \usepackage[T1]{fontenc}
+    \usepackage{amssymb}
+    \usepackage{listings}
+    \usepackage{minted}
+    \title{Compsys scripts}
+    \author{Emil Møller Hansen}
+    \date{}
+    \begin{document}
+        \maketitle
+        \pagestyle{fancy}
+        \cfoot{Page \thepage ~of \pageref{LastPage}}
+        %Af en eller anden grund stod der INDHOLD i sidehovedet, disse tre linjer fjerner dette
+        \chead{}
+        \lhead{}
+        \rhead{}
+        %Fjerner linjen i sidehovedet
+        \renewcommand{\headrulewidth}{0pt}
+
+        \tableofcontents
+        \newpage
+        \section{Address table}
+        \inputminted{javascript}{../js/addressTable.js}
+        \newpage
+        \section{Cache address}
+        \inputminted{javascript}{../js/cacheAddress.js}
+        \newpage
+        \section{Cache info}
+        \inputminted{javascript}{../js/cacheInfo.js}
+        \newpage
+        \section{Chapter 3 p51 (networking)}
+        \inputminted{javascript}{../js/Ch3P51.js}
+        \newpage
+        \section{Cyclic redundancy check}
+        \inputminted{javascript}{../js/crc.js}
+        \newpage
+        \section{internet checksum}
+        \inputminted{javascript}{../js/internetCheckSum.js}
+        \newpage
+        \section{Hash function page 640}
+        \inputminted{javascript}{../js/sloppyHashPage640.js}
+        \newpage
+        \section{To bin}
+        \inputminted{javascript}{../js/toBin.js}
+        \newpage
+        \section{Virtual address translation}
+        \inputminted{javascript}{../js/VMAddressTranslation.js}
+        \end{document}

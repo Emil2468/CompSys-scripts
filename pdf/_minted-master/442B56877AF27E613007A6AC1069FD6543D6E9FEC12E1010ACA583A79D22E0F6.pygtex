@@ -1,0 +1,95 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//Use this if you want to translate multiple addresses at once, use cache.js if }
+\PYG{c+c1}{//you only want to translate one address.}
+\PYG{c+c1}{//The hope is that this makes cache exercises easier as you can look at all}
+\PYG{c+c1}{//the address translations at once}
+
+
+\PYG{c+c1}{//Inputs:}
+\PYG{c+c1}{//B: Size of each block in bytes}
+\PYG{c+c1}{//E: Lines per set}
+\PYG{c+c1}{//C: Size of cache in bytes}
+\PYG{c+c1}{//m: number of bits in address}
+\PYG{c+c1}{//addresses: array of addresses needed to be translated}
+\PYG{c+c1}{//base: base to print, set index, tag and offset in (number between 2 and 36)}
+\PYG{c+c1}{//Prints a table showing translation of each address}
+\PYG{k+kd}{function} \PYG{n+nx}{translateAddresses}\PYG{p}{(}\PYG{n+nx}{B}\PYG{p}{,} \PYG{n+nx}{E}\PYG{p}{,} \PYG{n+nx}{C}\PYG{p}{,} \PYG{n+nx}{m}\PYG{p}{,} \PYG{n+nx}{addresses}\PYG{p}{,} \PYG{n+nx}{base}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{b} \PYG{o}{=} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{B}\PYG{p}{)}
+    \PYG{k+kd}{var} \PYG{n+nx}{S} \PYG{o}{=} \PYG{n+nx}{C} \PYG{o}{/} \PYG{p}{(}\PYG{n+nx}{B} \PYG{o}{*} \PYG{n+nx}{E}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{s} \PYG{o}{=} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{S}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{t} \PYG{o}{=} \PYG{n+nx}{m} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{n+nx}{s} \PYG{o}{+} \PYG{n+nx}{b}\PYG{p}{);}
+    \PYG{k+kd}{var} \PYG{n+nx}{headLine} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}Address (HEX)\PYGZbs{}tBits (BIN)\PYGZdq{}}
+    \PYG{c+c1}{//insert correct amount of tabs to make room for all bits}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nx}{m} \PYG{o}{/} \PYG{l+m+mi}{4}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{2}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{headLine} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}t\PYGZdq{}}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{n+nx}{headLine} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}Set\PYGZbs{}t\PYGZbs{}tTag\PYGZbs{}t\PYGZbs{}tOffset\PYGZdq{}}\PYG{p}{;}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{headLine}\PYG{p}{);}
+    
+    
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{addresses}\PYG{p}{.}\PYG{n+nx}{length}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{str} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+        \PYG{c+c1}{//Shift away the block offset and use bit mask to isolate index}
+        \PYG{k+kd}{var} \PYG{n+nx}{setIndex} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{addresses}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}} \PYG{n+nx}{b}\PYG{p}{)} \PYG{o}{\PYGZam{}} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{s}\PYG{p}{)}
+        \PYG{c+c1}{//Shift away block offset and index, the only thing left is the tag}
+        \PYG{k+kd}{var} \PYG{n+nx}{tag} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{addresses}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n+nx}{b}\PYG{o}{+}\PYG{n+nx}{s}\PYG{p}{));}
+        \PYG{c+c1}{//Use bit mask to remove bits more significant than those used to the}
+        \PYG{c+c1}{//block offset}
+        \PYG{k+kd}{var} \PYG{n+nx}{blockOffset} \PYG{o}{=} \PYG{n+nx}{addresses}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{\PYGZam{}} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{b}\PYG{p}{);}
+
+        \PYG{n+nx}{str} \PYG{o}{+=} \PYG{n+nx}{addresses}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{].}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}t\PYGZbs{}t\PYGZdq{}}\PYG{p}{;}
+        \PYG{n+nx}{str} \PYG{o}{+=} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{addresses}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{],} \PYG{n+nx}{m}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}t\PYGZdq{}}\PYG{p}{;}
+        \PYG{c+c1}{//Insert extra tab in case of many bits}
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{m} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{24}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{str} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}t\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n+nx}{str} \PYG{o}{+=} \PYG{n+nx}{setIndex}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{n+nx}{base}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}t\PYGZbs{}t\PYGZdq{}}\PYG{p}{;}
+        \PYG{n+nx}{str} \PYG{o}{+=} \PYG{n+nx}{tag}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{n+nx}{base}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}t\PYGZbs{}t\PYGZdq{}}\PYG{p}{;}
+        \PYG{n+nx}{str} \PYG{o}{+=} \PYG{n+nx}{blockOffset}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{n+nx}{base}\PYG{p}{);}
+        \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{str}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Converts number to string of len bits, I use this to get correct length}
+\PYG{k+kd}{function} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{num}\PYG{p}{,} \PYG{n+nx}{len}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{res} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+    \PYG{k+kd}{var} \PYG{n+nx}{temp} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{n+nx}{len} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{temp} \PYG{o}{=} \PYG{n+nx}{num} \PYG{o}{\PYGZam{}} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{));}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{temp} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{4} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nx}{res}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Returns a number with p ones as least significant bits, rest is zeros}
+\PYG{k+kd}{function} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{p}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+    \PYG{k+kd}{var} \PYG{n+nx}{mask} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{p}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{mask} \PYG{o}{+=} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nx}{mask}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Since IE does not support Math.log2 use this}
+\PYG{k+kd}{function} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)}\PYG{o}{/}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Examples below:}
+
+\PYG{c+c1}{//Prints information in binary}
+\PYG{c+c1}{// translateAddresses(64, 2, 2048, 20, }
+\PYG{c+c1}{//[0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004], 2);}
+
+\PYG{c+c1}{//Prints information in hex}
+\PYG{c+c1}{//translateAddresses(64, 2, 2048, 20, }
+\PYG{c+c1}{//[0xA000, 0xF020, 0xFF00, 0xFF0C, 0x0018,0xF0A4, 0xF004], 16);}
+\end{Verbatim}

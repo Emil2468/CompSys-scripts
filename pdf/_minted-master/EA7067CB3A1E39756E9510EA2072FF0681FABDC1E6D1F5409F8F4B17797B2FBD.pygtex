@@ -1,0 +1,73 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//Script to give information on a specific address in virtual mem, }
+\PYG{c+c1}{//virtual address to be used}
+\PYG{k+kd}{var} \PYG{n+nx}{vAddress} \PYG{o}{=} \PYG{l+m+mh}{0x03d4}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{k+kd}{var} \PYG{n+nx}{pageSize} \PYG{o}{=} \PYG{l+m+mi}{64}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{c+c1}{//Number of sets in TLB}
+\PYG{k+kd}{var} \PYG{n+nx}{tlbNrOfSets} \PYG{o}{=} \PYG{l+m+mi}{4}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+\PYG{c+c1}{//number of bits in virtual address}
+\PYG{k+kd}{var} \PYG{n+nx}{vAddressLen} \PYG{o}{=} \PYG{l+m+mi}{14}\PYG{p}{;} \PYG{c+c1}{//Change this to fit exercise}
+
+
+\PYG{k+kd}{function} \PYG{n+nx}{translateAddress}\PYG{p}{(}\PYG{n+nx}{vAddress}\PYG{p}{,} \PYG{n+nx}{pageSize}\PYG{p}{,} \PYG{n+nx}{tlbNrOfSets}\PYG{p}{,} \PYG{n+nx}{vAddressLen}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{p} \PYG{o}{=} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{pageSize}\PYG{p}{);}
+    
+    \PYG{k+kd}{var} \PYG{n+nx}{t} \PYG{o}{=} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{tlbNrOfSets}\PYG{p}{);}
+
+    \PYG{k+kd}{var} \PYG{n+nx}{bits} \PYG{o}{=} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{vAddress}\PYG{p}{,} \PYG{n+nx}{vAddressLen}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Bits in virtual address: \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{bits}\PYG{p}{);}
+
+    \PYG{c+c1}{//Shift in order to only keep the bits needed to vpn}
+    \PYG{k+kd}{var} \PYG{n+nx}{vpn} \PYG{o}{=} \PYG{n+nx}{vAddress} \PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}} \PYG{n+nx}{p}\PYG{p}{;}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}VPN (HEX): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{vpn}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{));}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}VPN (BIN): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{vpn}\PYG{p}{,} \PYG{n+nx}{vAddressLen} \PYG{o}{\PYGZhy{}} \PYG{n+nx}{p}\PYG{p}{));}
+
+    \PYG{k+kd}{var} \PYG{n+nx}{tlbI} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{vAddress} \PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}} \PYG{n+nx}{p}\PYG{p}{)} \PYG{o}{\PYGZam{}} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{t}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}TLB Index (HEX): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{tlbI}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{));}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}TLB Index (BIN): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{tlbI}\PYG{p}{,} \PYG{n+nx}{t}\PYG{p}{));}
+
+    \PYG{k+kd}{var} \PYG{n+nx}{tlbT} \PYG{o}{=} \PYG{n+nx}{vAddress} \PYG{o}{\PYGZgt{}\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n+nx}{p} \PYG{o}{+} \PYG{n+nx}{t}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}TLB Tag (HEX): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{tlbT}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{));}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}TLB Tag (BIN): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{tlbT}\PYG{p}{,} \PYG{n+nx}{p} \PYG{o}{+} \PYG{n+nx}{t}\PYG{p}{));}
+
+    \PYG{k+kd}{var} \PYG{n+nx}{vpo} \PYG{o}{=} \PYG{n+nx}{vAddress} \PYG{o}{\PYGZam{}} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{p}\PYG{p}{);}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}VPO (HEX): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{vpo}\PYG{p}{.}\PYG{n+nx}{toString}\PYG{p}{(}\PYG{l+m+mi}{16}\PYG{p}{));}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}VPO (BIN): \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{vpo}\PYG{p}{,} \PYG{n+nx}{p}\PYG{p}{));}
+
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Converts number to string of len bits, I use this to get correct length}
+\PYG{k+kd}{function} \PYG{n+nx}{toBin}\PYG{p}{(}\PYG{n+nx}{num}\PYG{p}{,} \PYG{n+nx}{len}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{res} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{;}
+    \PYG{k+kd}{var} \PYG{n+nx}{temp} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{n+nx}{len} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{temp} \PYG{o}{=} \PYG{n+nx}{num} \PYG{o}{\PYGZam{}} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{));}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{temp} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}0\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nx}{i} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{4} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{res} \PYG{o}{+=} \PYG{l+s+s2}{\PYGZdq{} \PYGZdq{}}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nx}{res}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Returns a number with p ones as least significant bits, rest is zeros}
+\PYG{k+kd}{function} \PYG{n+nx}{bitMask}\PYG{p}{(}\PYG{n+nx}{p}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+    \PYG{k+kd}{var} \PYG{n+nx}{mask} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kd}{var} \PYG{n+nx}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n+nx}{i} \PYG{o}{\PYGZlt{}} \PYG{n+nx}{p}\PYG{p}{;} \PYG{n+nx}{i}\PYG{o}{++}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{mask} \PYG{o}{+=} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{pow}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{n+nx}{i}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nx}{mask}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//Since IE does not support Math.log2 use this}
+\PYG{k+kd}{function} \PYG{n+nx}{log2}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{return} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{n+nx}{x}\PYG{p}{)}\PYG{o}{/}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c+c1}{//translateAddress(0x0825, 32, 4, 13);}
+\end{Verbatim}
